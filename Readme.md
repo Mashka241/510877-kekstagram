@@ -1,7 +1,7 @@
 # Личный проект «Кекстаграм» [![Build status][travis-image]][travis-url]
 
 * Студент: [Маша Иванова](https://up.htmlacademy.ru/javascript/14/user/510877).
-* Наставник: `Неизвестно`.
+* Наставник: Артём Коновалов.
 
 ---
 
