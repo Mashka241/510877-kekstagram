@@ -37,7 +37,7 @@ var createComments = function (numberOfComments, listOfComments) {
     commentsArray.push(comment);
   }
   return commentsArray;
-}
+};
 
 var createRandomPhoto = function (photoNumber, photoComment, photoDescription) {
   var url = 'photos/' + photoNumber + '.jpg';
@@ -90,7 +90,6 @@ picturesList.appendChild(renderPhotos(photosArray));
 
 var bigPicture = document.querySelector('.big-picture');
 bigPicture.classList.remove('hidden');
-console.log(photosArray[0]);
 bigPicture.querySelector('.big-picture__img').src = photosArray[0].url;
 bigPicture.querySelector('.likes-count').textContent = photosArray[0].likes;
 bigPicture.querySelector('.comments-count').textContent = photosArray[0].comments;
