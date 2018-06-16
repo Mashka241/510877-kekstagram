@@ -27,15 +27,28 @@ var getUnorderedArray = function (num) {
   return newArray;
 };
 
+var createComments = function (numberOfComments, listOfComments) {
+  var commentsArray = [];
+  for (var i = 0; i < numberOfComments; i++) {
+    var comment = getRandomArrElement(listOfComments);
+    if ((Math.random() - 0.5) > 0) {
+      comment += getRandomArrElement(listOfComments);
+    }
+    commentsArray.push(comment);
+  }
+  return commentsArray;
+}
+
 var createRandomPhoto = function (photoNumber, photoComment, photoDescription) {
   var url = 'photos/' + photoNumber + '.jpg';
   var likes = getRandomNumber(15, 200);
-  var comments = getRandomArrElement(photoComment);
+  var commentsNumber = getRandomNumber(1, 5);
+  var comments = createComments(commentsNumber, photoComment);
   var description = getRandomArrElement(photoDescription);
   var randomPhoto = {
     url: url,
     likes: likes,
-    comments: comments,
+    comments: comments.length,
     description: description
   };
   return randomPhoto;
@@ -51,4 +64,33 @@ var createPhotosArray = function (numberOfPhotos) {
   return photosArray;
 };
 
-createPhotosArray(25);
+var photosArray = createPhotosArray(25);
+
+var picturesList = document.querySelector('.pictures');
+var similarPhotoTemplate = document.querySelector('#picture').content.querySelector('.picture__link');
+
+var renderPhoto = function (photo) {
+  var photoElement = similarPhotoTemplate.cloneNode(true);
+  photoElement.querySelector('.picture__img').src = photo.url;
+  photoElement.querySelector('.picture__stat--likes').textContent = photo.likes;
+  photoElement.querySelector('.picture__stat--comments').textContent = photo.comments;
+  return photoElement;
+};
+
+var fragment = document.createDocumentFragment();
+
+var renderPhotos = function (arr) {
+  for (var i = 0; i < arr.length; i++) {
+    fragment.appendChild(renderPhoto(arr[i]));
+  }
+  return fragment;
+};
+
+picturesList.appendChild(renderPhotos(photosArray));
+
+var bigPicture = document.querySelector('.big-picture');
+bigPicture.classList.remove('hidden');
+console.log(photosArray[0]);
+bigPicture.querySelector('.big-picture__img').src = photosArray[0].url;
+bigPicture.querySelector('.likes-count').textContent = photosArray[0].likes;
+bigPicture.querySelector('.comments-count').textContent = photosArray[0].comments;
