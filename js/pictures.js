@@ -103,7 +103,7 @@ for (var i = 0; i < commentsList.length; i++) {
   var commentText = commentsList[i].querySelector('.social__text');
   commentPhoto.src = 'img/avatar-' + getRandomNumber(1, 6) + '.svg';
   commentText.textContent = photosArray[0].commentsContent[i];
-};
+}
 
 bigPicture.querySelector('.social__caption').textContent = photosArray[0].description;
 
