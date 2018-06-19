@@ -49,6 +49,7 @@ var createRandomPhoto = function (photoNumber, photoComment, photoDescription) {
     url: url,
     likes: likes,
     comments: comments.length,
+    commentsContent: comments,
     description: description
   };
   return randomPhoto;
@@ -93,3 +94,18 @@ bigPicture.classList.remove('hidden');
 bigPicture.querySelector('.big-picture__img').src = photosArray[0].url;
 bigPicture.querySelector('.likes-count').textContent = photosArray[0].likes;
 bigPicture.querySelector('.comments-count').textContent = photosArray[0].comments;
+
+var socialComments = bigPicture.querySelector('.social__comments');
+var commentsList = socialComments.querySelectorAll('li');
+
+for (var i = 0; i < commentsList.length; i++) {
+  var commentPhoto = commentsList[i].querySelector('.social__picture');
+  var commentText = commentsList[i].querySelector('.social__text');
+  commentPhoto.src = 'img/avatar-' + getRandomNumber(1, 6) + '.svg';
+  commentText.textContent = photosArray[0].commentsContent[i];
+};
+
+bigPicture.querySelector('.social__caption').textContent = photosArray[0].description;
+
+bigPicture.querySelector('.social__comment-count').classList.add('visually-hidden');
+bigPicture.querySelector('.social__loadmore').classList.add('visually-hidden');
