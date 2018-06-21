@@ -14,18 +14,18 @@ var getRandomArrElement = function (arr) {
   return arr[number];
 };
 
-var compareRandom = function () {
-  return Math.random() - 0.5;
-};
+// var compareRandom = function () {
+//   return Math.random() - 0.5;
+// };
 
-var generateUnorderedArray = function (num) {
-  var newArray = [];
-  for (var i = 1; i <= num; i++) {
-    newArray.push(i);
-  }
-  newArray.sort(compareRandom);
-  return newArray;
-};
+// var generateUnorderedArray = function (num) {
+//   var newArray = [];
+//   for (var i = 1; i <= num; i++) {
+//     newArray.push(i);
+//   }
+//   newArray.sort(compareRandom);
+//   return newArray;
+// };
 
 var createComments = function (numberOfComments, listOfComments) {
   var commentsArray = [];
@@ -58,7 +58,7 @@ var createRandomPhoto = function (photoNumber, photoComment, photoDescription) {
 var photosArray = [];
 
 for (var i = 0; i < 25; i++) {
-  var newPhoto = createRandomPhoto(i+1, photoComments, photoDescriptions);
+  var newPhoto = createRandomPhoto(i + 1, photoComments, photoDescriptions);
   photosArray.push(newPhoto);
 }
 
@@ -76,8 +76,8 @@ var renderPhoto = function (photo) {
 var fragment = document.createDocumentFragment();
 
 var renderPhotos = function (arr) {
-  for (var i = 0; i < arr.length; i++) {
-    fragment.appendChild(renderPhoto(arr[i]));
+  for (var j = 0; j < arr.length; j++) {
+    fragment.appendChild(renderPhoto(arr[j]));
   }
   return fragment;
 };
@@ -92,8 +92,8 @@ bigPicture.querySelector('.comments-count').textContent = photosArray[0].comment
 
 var socialComments = bigPicture.querySelector('.social__comments');
 
-for (var i = 0; i < photosArray[0].comments; i++) {
-  var comment = '<li class="social__comment social__comment--text"><img class="social__picture" src="img/avatar-' + getRandomNumber(1, 6) + '.svg" alt="Аватар комментатора фотографии" width="35" height="35"><p class="social__text">' + photosArray[0].commentsContent[i] + '</p></li>';
+for (var index = 0; index < photosArray[0].comments; index++) {
+  var comment = '<li class="social__comment social__comment--text"><img class="social__picture" src="img/avatar-' + getRandomNumber(1, 6) + '.svg" alt="Аватар комментатора фотографии" width="35" height="35"><p class="social__text">' + photosArray[0].commentsContent[index] + '</p></li>';
   socialComments.insertAdjacentHTML('beforeend', comment);
 }
 
