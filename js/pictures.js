@@ -4,8 +4,8 @@ var photoComments = ['Всё отлично!', 'В целом всё непло�
 
 var photoDescriptions = ['Тестим новую камеру!', 'Затусили с друзьями на море', 'Как же круто тут кормят', 'Отдыхаем...', 'Цените каждое мгновенье. Цените тех, кто рядом с вами и отгоняйте все сомненья. Не обижайте всех словами......', 'Вот это тачка!'];
 
-var getRandomNumber = function (x, y) {
-  var number = Math.floor(x + ((Math.random() * (y - x))));
+var getRandomNumber = function (num1, num2) {
+  var number = Math.floor(num1 + ((Math.random() * (num2 - num1))));
   return number;
 };
 
@@ -18,7 +18,7 @@ var compareRandom = function () {
   return Math.random() - 0.5;
 };
 
-var getUnorderedArray = function (num) {
+var generateUnorderedArray = function (num) {
   var newArray = [];
   for (var i = 1; i <= num; i++) {
     newArray.push(i);
@@ -55,17 +55,12 @@ var createRandomPhoto = function (photoNumber, photoComment, photoDescription) {
   return randomPhoto;
 };
 
-var createPhotosArray = function (numberOfPhotos) {
-  var photosArray = [];
-  var photoUrl = getUnorderedArray(numberOfPhotos);
-  for (var i = 0; i < numberOfPhotos; i++) {
-    var newPhoto = createRandomPhoto(photoUrl[i], photoComments, photoDescriptions);
-    photosArray.push(newPhoto);
-  }
-  return photosArray;
-};
+var photosArray = [];
 
-var photosArray = createPhotosArray(25);
+for (var i = 0; i < 25; i++) {
+  var newPhoto = createRandomPhoto(i+1, photoComments, photoDescriptions);
+  photosArray.push(newPhoto);
+}
 
 var picturesList = document.querySelector('.pictures');
 var similarPhotoTemplate = document.querySelector('#picture').content.querySelector('.picture__link');
@@ -96,13 +91,10 @@ bigPicture.querySelector('.likes-count').textContent = photosArray[0].likes;
 bigPicture.querySelector('.comments-count').textContent = photosArray[0].comments;
 
 var socialComments = bigPicture.querySelector('.social__comments');
-var commentsList = socialComments.querySelectorAll('li');
 
-for (var i = 0; i < commentsList.length; i++) {
-  var commentPhoto = commentsList[i].querySelector('.social__picture');
-  var commentText = commentsList[i].querySelector('.social__text');
-  commentPhoto.src = 'img/avatar-' + getRandomNumber(1, 6) + '.svg';
-  commentText.textContent = photosArray[0].commentsContent[i];
+for (var i = 0; i < photosArray[0].comments; i++) {
+  var comment = '<li class="social__comment social__comment--text"><img class="social__picture" src="img/avatar-' + getRandomNumber(1, 6) + '.svg" alt="Аватар комментатора фотографии" width="35" height="35"><p class="social__text">' + photosArray[0].commentsContent[i] + '</p></li>';
+  socialComments.insertAdjacentHTML('beforeend', comment);
 }
 
 bigPicture.querySelector('.social__caption').textContent = photosArray[0].description;
