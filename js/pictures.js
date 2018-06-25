@@ -110,3 +110,54 @@ var onPopupEscPress = function (evt) {
 
 uploadClose.addEventListener('click', closePopup);
 document.addEventListener('keydown', onPopupEscPress);
+
+var removeEffect = function () {
+  if (previewPicture.classList.length) {
+    var currentEffect = previewPicture.className;
+    previewPicture.classList.remove(currentEffect);
+  }
+};
+
+var addEffect = function (usedEffect) {
+  var effect = usedEffect.value;
+  var effectClass = 'effects__preview--' + effect;
+  previewPicture.classList.add(effectClass);
+};
+
+var previewPicture = document.querySelector('.img-upload__preview img');
+var effectsList = document.querySelector('.effects__list');
+var noneEffect = effectsList.querySelector('#effect-none');
+var chromeEffect = effectsList.querySelector('#effect-chrome');
+var sepiaEffect = effectsList.querySelector('#effect-sepia');
+var marvinEffect = effectsList.querySelector('#effect-marvin');
+var phobosEffect = effectsList.querySelector('#effect-phobos');
+var heatEffect = effectsList.querySelector('#effect-heat');
+
+chromeEffect.addEventListener('click', function () {
+  removeEffect();
+  addEffect(chromeEffect);
+});
+
+sepiaEffect.addEventListener('click', function () {
+  removeEffect();
+  addEffect(sepiaEffect);
+});
+
+marvinEffect.addEventListener('click', function () {
+  removeEffect();
+  addEffect(marvinEffect);
+});
+
+phobosEffect.addEventListener('click', function () {
+  removeEffect();
+  addEffect(phobosEffect);
+});
+
+heatEffect.addEventListener('click', function () {
+  removeEffect();
+  addEffect(heatEffect);
+});
+
+noneEffect.addEventListener('click', function () {
+  removeEffect();
+});
