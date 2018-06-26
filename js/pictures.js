@@ -108,7 +108,7 @@ var onPictureCloseEnterPress = function (evt) {
   if (evt.keyCode === 13) {
     closePicture();
   }
-}
+};
 
 bigPicture.addEventListener('click', closePicture);
 bigPictureClose.addEventListener('keydown', onPictureCloseEnterPress);
@@ -176,18 +176,18 @@ var makePictureBigger = function () {
   var size = currentSize + sizeStep;
   if (size <= maxSize) {
     resizeValue.value = size + '%';
-    previewPicture.style.transform = 'scale(' + (size / 100) + ')'; 
+    previewPicture.style.transform = 'scale(' + (size / 100) + ')';
   }
 };
 
 var makePictureSmaller = function () {
-  var currentSize = parseInt(resizeValue.value);
+  var currentSize = parseInt(resizeValue.value, 10);
   var size = currentSize - sizeStep;
   if (size >= minSize) {
     resizeValue.value = size + '%';
     previewPicture.style.transform = 'scale(' + (size / 100) + ')';
-  }  
-}
+  }
+};
 
 resizeMinus.addEventListener('click', function () {
   makePictureSmaller();
@@ -195,15 +195,4 @@ resizeMinus.addEventListener('click', function () {
 
 resizePlus.addEventListener('click', function () {
   makePictureBigger();
-});
-
-// var hashtagField = document.querySelector('.text__hashtags');
-// var hashtagString = hashtagField.value;
-// var hashtagsArray = hashtagString.split(' ');
-var commentText = document.querySelector('.text__description');
-
-commentText.addEventListener('invalid', function (evt) {
-  if (commentText.validity.tooShort) {
-    commentText.setCustomValidity('оаорвоарворвл');
-  }
 });
