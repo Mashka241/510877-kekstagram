@@ -98,13 +98,20 @@ var closePicture = function () {
   bigPicture.classList.add('hidden');
 };
 
-var onPictureEscPress = function(evt) {
+var onPictureEscPress = function (evt) {
   if (evt.keyCode === 27) {
     closePicture();
   }
 };
 
+var onPictureCloseEnterPress = function (evt) {
+  if (evt.keyCode === 13) {
+    closePicture();
+  }
+}
+
 bigPicture.addEventListener('click', closePicture);
+bigPictureClose.addEventListener('keydown', onPictureCloseEnterPress);
 
 document.addEventListener('keydown', onPictureEscPress);
 
@@ -160,17 +167,17 @@ effectsList.addEventListener('click', function (evt) {
     removeEffect();
     if (evt.target.value !== 'none') {
       addEffect(evt.target);
-    }  
-  }  
+    }
+  }
 });
 
 var makePictureBigger = function () {
-  var currentSize = parseInt(resizeValue.value);
+  var currentSize = parseInt(resizeValue.value, 10);
   var size = currentSize + sizeStep;
   if (size <= maxSize) {
     resizeValue.value = size + '%';
     previewPicture.style.transform = 'scale(' + (size / 100) + ')'; 
-  }  
+  }
 };
 
 var makePictureSmaller = function () {
@@ -188,4 +195,15 @@ resizeMinus.addEventListener('click', function () {
 
 resizePlus.addEventListener('click', function () {
   makePictureBigger();
+});
+
+// var hashtagField = document.querySelector('.text__hashtags');
+// var hashtagString = hashtagField.value;
+// var hashtagsArray = hashtagString.split(' ');
+var commentText = document.querySelector('.text__description');
+
+commentText.addEventListener('invalid', function (evt) {
+  if (commentText.validity.tooShort) {
+    commentText.setCustomValidity('оаорвоарворвл');
+  }
 });
