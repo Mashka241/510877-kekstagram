@@ -57,6 +57,9 @@ var renderPhoto = function (photo) {
   photoElement.querySelector('.picture__img').src = photo.url;
   photoElement.querySelector('.picture__stat--likes').textContent = photo.likes;
   photoElement.querySelector('.picture__stat--comments').textContent = photo.comments;
+  photoElement.addEventListener('click', function () {
+    renderBigPicture(photo);
+  });
   return photoElement;
 };
 
@@ -72,44 +75,52 @@ var renderPhotos = function (arr) {
 picturesList.appendChild(renderPhotos(photosArray));
 
 var bigPicture = document.querySelector('.big-picture');
-// bigPicture.classList.remove('hidden');
-bigPicture.querySelector('.big-picture__img').src = photosArray[0].url;
-bigPicture.querySelector('.likes-count').textContent = photosArray[0].likes;
-bigPicture.querySelector('.comments-count').textContent = photosArray[0].comments;
+var bigPictureClose = bigPicture.querySelector('.big-picture__cancel');
 
-var socialComments = bigPicture.querySelector('.social__comments');
+var renderBigPicture = function (data) {
+  bigPicture.querySelector('.big-picture__img > img').src = data.url;
+  bigPicture.querySelector('.likes-count').textContent = data.likes;
+  bigPicture.querySelector('.comments-count').textContent = data.comments;
+  var socialComments = bigPicture.querySelector('.social__comments');
 
-for (var index = 0; index < photosArray[0].comments; index++) {
-  var comment = '<li class="social__comment social__comment--text"><img class="social__picture" src="img/avatar-' + getRandomNumber(1, 6) + '.svg" alt="Аватар комментатора фотографии" width="35" height="35"><p class="social__text">' + photosArray[0].commentsContent[index] + '</p></li>';
-  socialComments.insertAdjacentHTML('beforeend', comment);
-}
+  for (var index = 0; index < data.comments; index++) {
+    var comment = '<li class="social__comment social__comment--text"><img class="social__picture" src="img/avatar-' + getRandomNumber(1, 6) + '.svg" alt="Аватар комментатора фотографии" width="35" height="35"><p class="social__text">' + data.commentsContent[index] + '</p></li>';
+    socialComments.insertAdjacentHTML('beforeend', comment);
+  }
 
-bigPicture.querySelector('.social__caption').textContent = photosArray[0].description;
+  bigPicture.querySelector('.social__caption').textContent = data.description;
+  bigPicture.querySelector('.social__comment-count').classList.add('visually-hidden');
+  bigPicture.querySelector('.social__loadmore').classList.add('visually-hidden');
+  bigPicture.classList.remove('hidden');
+};
 
-bigPicture.querySelector('.social__comment-count').classList.add('visually-hidden');
-bigPicture.querySelector('.social__loadmore').classList.add('visually-hidden');
+var closePicture = function () {
+  bigPicture.classList.add('hidden');
+};
+
+var onPictureEscPress = function(evt) {
+  if (evt.keyCode === 27) {
+    closePicture();
+  }
+};
+
+bigPicture.addEventListener('click', closePicture);
+
+document.addEventListener('keydown', onPictureEscPress);
 
 var uploadOpen = document.querySelector('#upload-file');
 var upload = document.querySelector('.img-upload__overlay');
 var uploadClose = upload.querySelector('.img-upload__cancel');
+var resizeMinus = document.querySelector('.resize__control--minus');
+var resizePlus = document.querySelector('.resize__control--plus');
+var resizeValue = document.querySelector('.resize__control--value');
+var sizeStep = 25;
+var minSize = 25;
+var maxSize = 100;
 
 uploadOpen.addEventListener('change', function () {
   upload.classList.remove('hidden');
 });
-
-var closePopup = function () {
-  upload.classList.add('hidden');
-  uploadOpen.value = null;
-};
-
-var onPopupEscPress = function (evt) {
-  if (evt.keyCode === 27) {
-    closePopup();
-  }
-};
-
-uploadClose.addEventListener('click', closePopup);
-document.addEventListener('keydown', onPopupEscPress);
 
 var removeEffect = function () {
   if (previewPicture.classList.length) {
@@ -124,40 +135,57 @@ var addEffect = function (usedEffect) {
   previewPicture.classList.add(effectClass);
 };
 
+var closePopup = function () {
+  upload.classList.add('hidden');
+  uploadOpen.value = null;
+  removeEffect();
+  resizeValue.value = '100%';
+  previewPicture.style.transform = 'scale(1)';
+};
+
+var onPopupEscPress = function (evt) {
+  if (evt.keyCode === 27) {
+    closePopup();
+  }
+};
+
+uploadClose.addEventListener('click', closePopup);
+document.addEventListener('keydown', onPopupEscPress);
+
 var previewPicture = document.querySelector('.img-upload__preview img');
 var effectsList = document.querySelector('.effects__list');
-var noneEffect = effectsList.querySelector('#effect-none');
-var chromeEffect = effectsList.querySelector('#effect-chrome');
-var sepiaEffect = effectsList.querySelector('#effect-sepia');
-var marvinEffect = effectsList.querySelector('#effect-marvin');
-var phobosEffect = effectsList.querySelector('#effect-phobos');
-var heatEffect = effectsList.querySelector('#effect-heat');
 
-chromeEffect.addEventListener('click', function () {
-  removeEffect();
-  addEffect(chromeEffect);
+effectsList.addEventListener('click', function (evt) {
+  if (evt.target.classList.contains('effects__radio')) {
+    removeEffect();
+    if (evt.target.value !== 'none') {
+      addEffect(evt.target);
+    }  
+  }  
 });
 
-sepiaEffect.addEventListener('click', function () {
-  removeEffect();
-  addEffect(sepiaEffect);
+var makePictureBigger = function () {
+  var currentSize = parseInt(resizeValue.value);
+  var size = currentSize + sizeStep;
+  if (size <= maxSize) {
+    resizeValue.value = size + '%';
+    previewPicture.style.transform = 'scale(' + (size / 100) + ')'; 
+  }  
+};
+
+var makePictureSmaller = function () {
+  var currentSize = parseInt(resizeValue.value);
+  var size = currentSize - sizeStep;
+  if (size >= minSize) {
+    resizeValue.value = size + '%';
+    previewPicture.style.transform = 'scale(' + (size / 100) + ')';
+  }  
+}
+
+resizeMinus.addEventListener('click', function () {
+  makePictureSmaller();
 });
 
-marvinEffect.addEventListener('click', function () {
-  removeEffect();
-  addEffect(marvinEffect);
-});
-
-phobosEffect.addEventListener('click', function () {
-  removeEffect();
-  addEffect(phobosEffect);
-});
-
-heatEffect.addEventListener('click', function () {
-  removeEffect();
-  addEffect(heatEffect);
-});
-
-noneEffect.addEventListener('click', function () {
-  removeEffect();
+resizePlus.addEventListener('click', function () {
+  makePictureBigger();
 });
