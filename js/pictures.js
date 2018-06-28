@@ -171,28 +171,96 @@ effectsList.addEventListener('click', function (evt) {
   }
 });
 
-var makePictureBigger = function () {
+var resizePicture = function (operation) {
   var currentSize = parseInt(resizeValue.value, 10);
-  var size = currentSize + sizeStep;
-  if (size <= maxSize) {
-    resizeValue.value = size + '%';
-    previewPicture.style.transform = 'scale(' + (size / 100) + ')';
+  if (operation === '-') {
+    var size = currentSize - sizeStep;
+  } else if (operation === '+') {
+    var size = currentSize + sizeStep;
   }
-};
-
-var makePictureSmaller = function () {
-  var currentSize = parseInt(resizeValue.value, 10);
-  var size = currentSize - sizeStep;
-  if (size >= minSize) {
+  if (size >= minSize && size <= maxSize) {
     resizeValue.value = size + '%';
     previewPicture.style.transform = 'scale(' + (size / 100) + ')';
   }
 };
 
 resizeMinus.addEventListener('click', function () {
-  makePictureSmaller();
+  resizePicture('-');
 });
 
 resizePlus.addEventListener('click', function () {
-  makePictureBigger();
+  resizePicture('+');
 });
+
+var uploadForm = document.querySelector('.img-upload__form');
+var commentField = uploadForm.querySelector('.text__description');
+var hashtagField = uploadForm.querySelector('.text__hashtags');
+
+// uploadForm.addEventListener('submit', function (evt) {
+//   evt.preventDefault();
+//   var hashtagContent = hashtagField.value;
+//   console.log(hashtagContent.length);
+//   if (hashtagContent.length < 5) {
+//     hashtagField.setCustomValidity('Нужно ввести больше 5 букв');
+//   } else {
+//     uploadForm.submit();
+//   }
+// });
+
+uploadForm.addEventListener('submit', function (evt) {
+  evt.preventDefault();
+  var hashtagContent = hashtagField.value;
+  var hashtagArray = hashtagContent.toLowerCase().split(' ');
+  for (var i = 0; i < hashtagArray.length; i++) {
+    var currentHashtag = hashtagArray[i];
+    if (hashtagArray.indexOf(currentHashtag, (i + 1)) !== -1) {
+      hashtagField.setCustomValidity('один и тот же хэш-тег ' + currentHashtag + ' не может быть использован дважды');
+    } else if (currentHashtag[0] !== '#') {
+      hashtagField.setCustomValidity('хэш-тег должен начинаться с символа #');
+    } else if (currentHashtag.length === 1 && currentHashtag[0] === '#') {
+      hashtagField.setCustomValidity('хеш-тег не может состоять только из одной решётки');
+    } else if (currentHashtag.length > 20) {
+      hashtagField.setCustomValidity('максимальная длина одного хэш-тега 20 символов, включая решётку');
+    } else {
+      hashtagField.setCustomValidity('');
+      uploadForm.submit();
+    }
+  }
+});
+
+// hashtagField.addEventListener('change' , function () {
+//   var hashtagString = hashtagField.value.toLowerCase();
+//   var hashtagArray = hashtagString.split(' ');
+//   for (var i = 0; i < hashtagArray.length; i++) {
+//     var currentHashtag = hashtagArray[i];
+    
+//     if (hashtagArray.indexOf(currentHashtag, (i + 1)) !== -1) {
+//       console.log('Ошибка: один и тот же хэш-тег ' + currentHashtag + ' не может быть использован дважды');
+//       hashtagField.classList.add('text__hashtags--invalid');
+//     } else {
+//       hashtagField.className = 'text__hashtags';
+//     }
+
+//     if (currentHashtag[0] !== '#') {
+//       hashtagField.setCustomValidity('хэш-тег начинается с символа # (решётка)');
+//       hashtagField.classList.add('text__hashtags--invalid');
+//     } else {
+//       hashtagField.className = 'text__hashtags';
+//     }
+
+//     if (currentHashtag.length <= 1) {
+//       console.log('Ошибка: хеш-тег не может состоять только из одной решётки');
+//       hashtagField.classList.add('text__hashtags--invalid');
+//     } else {
+//       hashtagField.className = 'text__hashtags';
+//     }
+
+//     if (currentHashtag.length > 20) {
+//       console.log('Ошибка: максимальная длина одного хэш-тега 20 символов, включая решётку');
+//       hashtagField.classList.add('text__hashtags--invalid');
+//     } else {
+//       hashtagField.className = 'text__hashtags';
+//     }
+//   }
+// });
+
