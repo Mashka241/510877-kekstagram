@@ -213,7 +213,8 @@ uploadForm.addEventListener('submit', function (evt) {
   var hashtagContent = hashtagField.value;
   var hashtagArray = hashtagContent.toLowerCase().split(' ');
   for (var j = 0; j < hashtagArray.length; j++) {
-    var currentHashtag = hashtagArray[i];
+    var currentHashtag = hashtagArray[j];
+
     if (hashtagArray.indexOf(currentHashtag, (i + 1)) !== -1) {
       hashtagField.setCustomValidity('один и тот же хэш-тег ' + currentHashtag + ' не может быть использован дважды');
     } else if (currentHashtag[0] !== '#') {
