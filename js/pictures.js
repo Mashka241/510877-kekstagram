@@ -208,8 +208,7 @@ var hashtagField = uploadForm.querySelector('.text__hashtags');
 //   }
 // });
 
-uploadForm.addEventListener('submit', function (evt) {
-  evt.preventDefault();
+var validateHashtagField = function () {
   var hashtagContent = hashtagField.value;
   var hashtagArray = hashtagContent.toLowerCase().split(' ');
   for (var j = 0; j < hashtagArray.length; j++) {
@@ -225,43 +224,14 @@ uploadForm.addEventListener('submit', function (evt) {
       hashtagField.setCustomValidity('максимальная длина одного хэш-тега 20 символов, включая решётку');
     } else {
       hashtagField.setCustomValidity('');
-      uploadForm.submit();
     }
   }
+};
+
+uploadForm.addEventListener('submit', function (evt) {
+  evt.preventDefault();
+  validateHashtagField();
+  if (uploadForm.checkValidity()) {
+    uploadForm.submit();
+  }
 });
-
-// hashtagField.addEventListener('change' , function () {
-//   var hashtagString = hashtagField.value.toLowerCase();
-//   var hashtagArray = hashtagString.split(' ');
-//   for (var i = 0; i < hashtagArray.length; i++) {
-//     var currentHashtag = hashtagArray[i];
-//     if (hashtagArray.indexOf(currentHashtag, (i + 1)) !== -1) {
-//       console.log('Ошибка: один и тот же хэш-тег ' + currentHashtag + ' не может быть использован дважды');
-//       hashtagField.classList.add('text__hashtags--invalid');
-//     } else {
-//       hashtagField.className = 'text__hashtags';
-//     }
-
-//     if (currentHashtag[0] !== '#') {
-//       hashtagField.setCustomValidity('хэш-тег начинается с символа # (решётка)');
-//       hashtagField.classList.add('text__hashtags--invalid');
-//     } else {
-//       hashtagField.className = 'text__hashtags';
-//     }
-
-//     if (currentHashtag.length <= 1) {
-//       console.log('Ошибка: хеш-тег не может состоять только из одной решётки');
-//       hashtagField.classList.add('text__hashtags--invalid');
-//     } else {
-//       hashtagField.className = 'text__hashtags';
-//     }
-
-//     if (currentHashtag.length > 20) {
-//       console.log('Ошибка: максимальная длина одного хэш-тега 20 символов, включая решётку');
-//       hashtagField.classList.add('text__hashtags--invalid');
-//     } else {
-//       hashtagField.className = 'text__hashtags';
-//     }
-//   }
-// });
-
