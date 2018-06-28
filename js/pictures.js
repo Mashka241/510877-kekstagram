@@ -173,10 +173,11 @@ effectsList.addEventListener('click', function (evt) {
 
 var resizePicture = function (operation) {
   var currentSize = parseInt(resizeValue.value, 10);
+  var size;
   if (operation === '-') {
-    var size = currentSize - sizeStep;
+    size = currentSize - sizeStep;
   } else if (operation === '+') {
-    var size = currentSize + sizeStep;
+    size = currentSize + sizeStep;
   }
   if (size >= minSize && size <= maxSize) {
     resizeValue.value = size + '%';
@@ -193,7 +194,7 @@ resizePlus.addEventListener('click', function () {
 });
 
 var uploadForm = document.querySelector('.img-upload__form');
-var commentField = uploadForm.querySelector('.text__description');
+// var commentField = uploadForm.querySelector('.text__description');
 var hashtagField = uploadForm.querySelector('.text__hashtags');
 
 // uploadForm.addEventListener('submit', function (evt) {
@@ -211,7 +212,7 @@ uploadForm.addEventListener('submit', function (evt) {
   evt.preventDefault();
   var hashtagContent = hashtagField.value;
   var hashtagArray = hashtagContent.toLowerCase().split(' ');
-  for (var i = 0; i < hashtagArray.length; i++) {
+  for (var j = 0; j < hashtagArray.length; j++) {
     var currentHashtag = hashtagArray[i];
     if (hashtagArray.indexOf(currentHashtag, (i + 1)) !== -1) {
       hashtagField.setCustomValidity('один и тот же хэш-тег ' + currentHashtag + ' не может быть использован дважды');
@@ -233,7 +234,6 @@ uploadForm.addEventListener('submit', function (evt) {
 //   var hashtagArray = hashtagString.split(' ');
 //   for (var i = 0; i < hashtagArray.length; i++) {
 //     var currentHashtag = hashtagArray[i];
-    
 //     if (hashtagArray.indexOf(currentHashtag, (i + 1)) !== -1) {
 //       console.log('Ошибка: один и тот же хэш-тег ' + currentHashtag + ' не может быть использован дважды');
 //       hashtagField.classList.add('text__hashtags--invalid');
