@@ -203,7 +203,7 @@ var getNewArrayWithoutIndex = function(array, index) {
 
 var isDouble = function(array) {
   var counter = 0;
-  for (let index = 0; index < array.length; index++) {
+  for (var index = 0; index < array.length; index++) {
     var newArray = getNewArrayWithoutIndex(array, index);
       if (newArray.indexOf(array[index]) !== -1) {
         counter += 1;
