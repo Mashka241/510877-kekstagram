@@ -194,28 +194,35 @@ resizePlus.addEventListener('click', function () {
 });
 
 var uploadForm = document.querySelector('.img-upload__form');
-var commentField = uploadForm.querySelector('.text__description');
+// var commentField = uploadForm.querySelector('.text__description');
 var hashtagField = uploadForm.querySelector('.text__hashtags');
 
-var isElementDouble = function (element, indexNumber, arr) {
-  if (arr.indexOf(element) === indexNumber) {
-    return false;
-  } else {
-    return true;
-  }
+var getNewArrayWithoutIndex = function(array, index) {
+  return array.slice(0, index).concat(array.slice(index + 1));
+};
+
+var isDouble = function(array) {
+  var counter = 0;
+  for (let index = 0; index < array.length; index++) {
+    var newArray = getNewArrayWithoutIndex(array, index);
+      if (newArray.indexOf(array[index]) !== -1) {
+        counter += 1;
+      };
+    }
+  return counter > 0;
 };
 
 var validateHashtagField = function () {
   hashtagField.setCustomValidity('');
   var hashtagContent = hashtagField.value;
   var hashtagArray = hashtagContent.toLowerCase().split(' ');
+  if (isDouble(hashtagArray)) {
+    hashtagField.setCustomValidity('один и тот же хэш-тег не может быть использован дважды');
+    return false;
+  }
   for (var j = 0; j < hashtagArray.length; j++) {
     var currentHashtag = hashtagArray[j];
-
-    if (isElementDouble(currentHashtag, j, hashtagArray)) {
-      hashtagField.setCustomValidity('один и тот же хэш-тег ' + currentHashtag + ' не может быть использован дважды');
-      return false;
-    } else if (currentHashtag[0] !== '#') {
+    if (currentHashtag[0] !== '#') {
       hashtagField.setCustomValidity('хэш-тег должен начинаться с символа #');
       hashtagField.classList.add('text__hashtags--invalid');
       return false;
@@ -226,10 +233,10 @@ var validateHashtagField = function () {
       hashtagField.setCustomValidity('максимальная длина одного хэш-тега 20 символов, включая решётку');
       return false;
     } 
-    hashtagField.setCustomValidity('');
-    hashtagField.classList.remove('text__hashtags--invalid');
-    return true;
   }
+  hashtagField.setCustomValidity('');
+  hashtagField.classList.remove('text__hashtags--invalid');
+  return true;
 };
 
 uploadForm.addEventListener('submit', function (evt) {
