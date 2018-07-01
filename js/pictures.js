@@ -197,18 +197,18 @@ var uploadForm = document.querySelector('.img-upload__form');
 // var commentField = uploadForm.querySelector('.text__description');
 var hashtagField = uploadForm.querySelector('.text__hashtags');
 
-var getNewArrayWithoutIndex = function(array, index) {
+var getNewArrayWithoutIndex = function (array, index) {
   return array.slice(0, index).concat(array.slice(index + 1));
 };
 
-var isDouble = function(array) {
+var isDouble = function (array) {
   var counter = 0;
   for (var index = 0; index < array.length; index++) {
     var newArray = getNewArrayWithoutIndex(array, index);
-      if (newArray.indexOf(array[index]) !== -1) {
-        counter += 1;
-      };
+    if (newArray.indexOf(array[index]) !== -1) {
+      counter += 1;
     }
+  }
   return counter > 0;
 };
 
@@ -232,7 +232,7 @@ var validateHashtagField = function () {
     } else if (currentHashtag.length > 20) {
       hashtagField.setCustomValidity('максимальная длина одного хэш-тега 20 символов, включая решётку');
       return false;
-    } 
+    }
   }
   hashtagField.setCustomValidity('');
   hashtagField.classList.remove('text__hashtags--invalid');
