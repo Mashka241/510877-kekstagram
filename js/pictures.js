@@ -1,5 +1,13 @@
 'use strict';
 
+var ESC_KEYCODE = 27;
+var ENTER_KEYCODE = 13;
+var SIZE_STEP = 25;
+var MIN_PICTURE_SIZE = 25;
+var MAX_PICTURE_SIZE = 100;
+var MAX_HASHTAGS_NUMBER = 5;
+var MAX_HASHTAG_LENGTH = 20;
+
 var photoComments = ['Всё отлично!', 'В целом всё неплохо. Но не всё.', 'Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.', 'Моя бабушка случайно чихнула с фотоаппаратом в руках и у неё получилась фотография лучше.', 'Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.', 'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!'];
 
 var photoDescriptions = ['Тестим новую камеру!', 'Затусили с друзьями на море', 'Как же круто тут кормят', 'Отдыхаем...', 'Цените каждое мгновенье. Цените тех, кто рядом с вами и отгоняйте все сомненья. Не обижайте всех словами......', 'Вот это тачка!'];
@@ -76,8 +84,7 @@ picturesList.appendChild(renderPhotos(photosArray));
 
 var bigPicture = document.querySelector('.big-picture');
 var bigPictureClose = bigPicture.querySelector('.big-picture__cancel');
-var ESC_KEYCODE = 27;
-var ENTER_KEYCODE = 13;
+
 
 var renderBigPicture = function (data) {
   bigPicture.querySelector('.big-picture__img > img').src = data.url;
@@ -123,9 +130,6 @@ var uploadClose = upload.querySelector('.img-upload__cancel');
 var resizeMinus = document.querySelector('.resize__control--minus');
 var resizePlus = document.querySelector('.resize__control--plus');
 var resizeValue = document.querySelector('.resize__control--value');
-var sizeStep = 25;
-var minSize = 25;
-var maxSize = 100;
 var uploadForm = document.querySelector('.img-upload__form');
 var commentField = uploadForm.querySelector('.text__description');
 var hashtagField = uploadForm.querySelector('.text__hashtags');
@@ -156,15 +160,19 @@ var closePopup = function () {
 };
 
 var onPopupEscPress = function (evt) {
-  if (evt.keyCode === ESC_KEYCODE && evt.target !== hashtagField && evt.target !== commentField) {
-    closePopup();
+  if (evt.keyCode === ESC_KEYCODE) {
+    if (evt.target === hashtagField) {
+      hashtagField.blur();
+    } else if (evt.target === commentField) {
+      commentField.blur();
+    } else {
+      closePopup();
+    }
   }
 };
 
-var onButtonCancelClick = function (evt) {
-  if (evt.target !== hashtagField && evt.target !== commentField) {
-    closePopup();
-  }
+var onButtonCancelClick = function () {
+  closePopup();
 };
 
 uploadClose.addEventListener('click', onButtonCancelClick);
@@ -187,11 +195,11 @@ var resizePicture = function (operation) {
   var currentSize = parseInt(resizeValue.value, 10);
   var size;
   if (operation === 'minus') {
-    size = currentSize - sizeStep;
+    size = currentSize - SIZE_STEP;
   } else if (operation === 'plus') {
-    size = currentSize + sizeStep;
+    size = currentSize + SIZE_STEP;
   }
-  if (size >= minSize && size <= maxSize) {
+  if (size >= MIN_PICTURE_SIZE && size <= MAX_PICTURE_SIZE) {
     resizeValue.value = size + '%';
     previewPicture.style.transform = 'scale(' + (size / 100) + ')';
   }
@@ -220,19 +228,15 @@ var isDouble = function (array) {
   return counter > 0;
 };
 
-var maxHashtagsNumber = 5;
-var maxHashtagLength = 20;
-
 var validateHashtagField = function () {
   hashtagField.setCustomValidity('');
   hashtagField.classList.remove('text__hashtags--invalid');
   var hashtagContent = hashtagField.value;
   if (hashtagContent.length === 0) {
-    hashtagField.setCustomValidity('');
     return true;
   }
-  var hashtagArray = hashtagContent.toLowerCase().split(' ');
-  if (hashtagArray.length > maxHashtagsNumber) {
+  var hashtagArray = hashtagContent.trim().toLowerCase().split(' ');
+  if (hashtagArray.length > MAX_HASHTAGS_NUMBER) {
     hashtagField.setCustomValidity('нельзя указать больше пяти хэш-тегов');
     hashtagField.classList.add('text__hashtags--invalid');
     return false;
@@ -252,7 +256,7 @@ var validateHashtagField = function () {
       hashtagField.setCustomValidity('хеш-тег не может состоять только из одной решётки');
       hashtagField.classList.add('text__hashtags--invalid');
       return false;
-    } else if (currentHashtag.length > maxHashtagLength) {
+    } else if (currentHashtag.length > MAX_HASHTAG_LENGTH) {
       hashtagField.setCustomValidity('максимальная длина одного хэш-тега 20 символов, включая решётку');
       hashtagField.classList.add('text__hashtags--invalid');
       return false;
