@@ -165,7 +165,7 @@ var onButtonCancelClick = function (evt) {
   if (evt.target !== hashtagField && evt.target !== commentField) {
     closePopup();
   }
-}
+};
 
 uploadClose.addEventListener('click', onButtonCancelClick);
 
