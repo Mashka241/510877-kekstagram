@@ -277,3 +277,60 @@ uploadForm.addEventListener('submit', function (evt) {
 hashtagField.addEventListener('change', function () {
   validateHashtagField();
 });
+
+var effectsScale = document.querySelector('.img-upload__scale');
+var scalePin = effectsScale.querySelector('.scale__pin');
+var scaleValueInput = effectsScale.querySelector('.scale__value');
+var scaleLevel = effectsScale.querySelector('.scale__level');
+var scaleLine = effectsScale.querySelector('.scale__line');
+
+var changeEffectDepth = function (effect, depth) {
+  if (~effect.indexOf("grayscale")) {
+    previewPicture.style.filter = 'grayscale('+ depth / 100 +')';
+  } else if (~effect.indexOf("sepia")) {
+    previewPicture.style.filter = 'sepia('+ depth / 100 +')';
+  }
+  scaleLevel.style.width = depth + '%';
+  scaleValueInput.value = depth;
+};
+
+scalePin.addEventListener('mousedown', function (evt) {
+  evt.preventDefault();
+
+  var startCoordinateX = evt.clientX;
+
+  var onMouseMove = function (moveEvt) {
+    moveEvt.preventDefault();
+    var shiftX = startCoordinateX - moveEvt.clientX;
+    startCoordinateX = moveEvt.clientX;
+
+    var newCoordinateX = scalePin.offsetLeft - shiftX;
+
+    if (newCoordinateX < 0) {
+      newCoordinateX = 0;
+    }
+
+    var rightEdge = scaleLine.offsetWidth;
+    console.log(rightEdge);
+
+    if (newCoordinateX > rightEdge) {
+      newCoordinateX = rightEdge;
+    }
+
+    scalePin.style.left = newCoordinateX + 'px';
+    var scaleValue = Math.round(newCoordinateX * 100 / 453);
+    var computedStyle = getComputedStyle(previewPicture);
+    var filter = computedStyle.filter;
+    
+    changeEffectDepth (filter, scaleValue);
+  };
+
+  var onMouseUp = function (upEvt) {
+    upEvt.preventDefault();
+    document.removeEventListener('mousemove', onMouseMove);
+    document.removeEventListener('mouseup', onMouseUp);
+  };
+
+  document.addEventListener('mousemove', onMouseMove);
+  document.addEventListener('mouseup', onMouseUp);
+});
