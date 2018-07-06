@@ -285,10 +285,10 @@ var scaleLevel = effectsScale.querySelector('.scale__level');
 var scaleLine = effectsScale.querySelector('.scale__line');
 
 var changeEffectDepth = function (effect, depth) {
-  if (~effect.indexOf("grayscale")) {
-    previewPicture.style.filter = 'grayscale('+ depth / 100 +')';
-  } else if (~effect.indexOf("sepia")) {
-    previewPicture.style.filter = 'sepia('+ depth / 100 +')';
+  if (~effect.indexOf('grayscale')) {
+    previewPicture.style.filter = 'grayscale(' + depth / 100 + ')';
+  } else if (~effect.indexOf('sepia')) {
+    previewPicture.style.filter = 'sepia(' + depth / 100 + ')';
   }
   scaleLevel.style.width = depth + '%';
   scaleValueInput.value = depth;
@@ -311,7 +311,6 @@ scalePin.addEventListener('mousedown', function (evt) {
     }
 
     var rightEdge = scaleLine.offsetWidth;
-    console.log(rightEdge);
 
     if (newCoordinateX > rightEdge) {
       newCoordinateX = rightEdge;
@@ -321,8 +320,7 @@ scalePin.addEventListener('mousedown', function (evt) {
     var scaleValue = Math.round(newCoordinateX * 100 / 453);
     var computedStyle = getComputedStyle(previewPicture);
     var filter = computedStyle.filter;
-    
-    changeEffectDepth (filter, scaleValue);
+    changeEffectDepth(filter, scaleValue);
   };
 
   var onMouseUp = function (upEvt) {
