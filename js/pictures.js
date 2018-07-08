@@ -287,55 +287,55 @@ var scaleLevel = effectsScale.querySelector('.scale__level');
 var scaleLine = effectsScale.querySelector('.scale__line');
 
 var effectTypes = [
-{
-  value: 'none',
-  effect: '',
-  min: '',
-  max: '',
-  typeValue: ''
-},
-{
-  value: 'chrome',
-  effect: 'grayscale',
-  min: 0,
-  max: 1,
-  typeValue: '',
-},
-{
-  value: 'sepia',
-  effect: 'sepia',
-  min: 0,
-  max: 1,
-  typeValue: ''
-},
-{
-  value: 'marvin',
-  effect: 'invert',
-  min: 0,
-  max: 100,
-  typeValue: '%'
-},
-{
-  value: 'phobos',
-  effect: 'blur',
-  min: 0,
-  max: 3,
-  typeValue: 'px'
-},
-{
-  value: 'heat',
-  effect: 'brightness',
-  min: 1,
-  max: 3,
-  typeValue: ''
-}];
+  {
+    value: 'none',
+    effect: '',
+    min: '',
+    max: '',
+    typeValue: ''
+  },
+  {
+    value: 'chrome',
+    effect: 'grayscale',
+    min: 0,
+    max: 1,
+    typeValue: '',
+  },
+  {
+    value: 'sepia',
+    effect: 'sepia',
+    min: 0,
+    max: 1,
+    typeValue: ''
+  },
+  {
+    value: 'marvin',
+    effect: 'invert',
+    min: 0,
+    max: 100,
+    typeValue: '%'
+  },
+  {
+    value: 'phobos',
+    effect: 'blur',
+    min: 0,
+    max: 3,
+    typeValue: 'px'
+  },
+  {
+    value: 'heat',
+    effect: 'brightness',
+    min: 1,
+    max: 3,
+    typeValue: ''
+  }];
 
 var changeEffectValue = function (currentEffect, effectDepth) {
   var effectValue = ((currentEffect.max - currentEffect.min) * effectDepth / 100) + currentEffect.min;
   previewPicture.style.filter = currentEffect.effect + '(' + effectValue + currentEffect.typeValue + ')';
   scaleLevel.style.width = effectDepth + '%';
   scaleValueInput.value = effectDepth;
-}
+};
 
 scalePin.addEventListener('mousedown', function (evt) {
   evt.preventDefault();
