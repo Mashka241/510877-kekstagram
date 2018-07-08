@@ -185,7 +185,9 @@ var effectsList = document.querySelector('.effects__list');
 effectsList.addEventListener('click', function (evt) {
   if (evt.target.classList.contains('effects__radio')) {
     removeEffect();
+    effectsScale.classList.add('hidden');
     if (evt.target.value !== 'none') {
+      effectsScale.classList.remove('hidden');
       addEffect(evt.target);
     }
   }
@@ -284,15 +286,56 @@ var scaleValueInput = effectsScale.querySelector('.scale__value');
 var scaleLevel = effectsScale.querySelector('.scale__level');
 var scaleLine = effectsScale.querySelector('.scale__line');
 
-var changeEffectDepth = function (effect, depth) {
-  if (~effect.indexOf('grayscale')) {
-    previewPicture.style.filter = 'grayscale(' + depth / 100 + ')';
-  } else if (~effect.indexOf('sepia')) {
-    previewPicture.style.filter = 'sepia(' + depth / 100 + ')';
-  }
-  scaleLevel.style.width = depth + '%';
-  scaleValueInput.value = depth;
-};
+var effectTypes = [
+{
+  value: 'none',
+  effect: '',
+  min: '',
+  max: '',
+  typeValue: ''
+},
+{
+  value: 'chrome',
+  effect: 'grayscale',
+  min: 0,
+  max: 1,
+  typeValue: '',
+},
+{
+  value: 'sepia',
+  effect: 'sepia',
+  min: 0,
+  max: 1,
+  typeValue: ''
+},
+{
+  value: 'marvin',
+  effect: 'invert',
+  min: 0,
+  max: 100,
+  typeValue: '%'
+},
+{
+  value: 'phobos',
+  effect: 'blur',
+  min: 0,
+  max: 3,
+  typeValue: 'px'
+},
+{
+  value: 'heat',
+  effect: 'brightness',
+  min: 1,
+  max: 3,
+  typeValue: ''
+}];
+
+var changeEffectValue = function (currentEffect, effectDepth) {
+  var effectValue = ((currentEffect.max - currentEffect.min) * effectDepth / 100) + currentEffect.min;
+  previewPicture.style.filter = currentEffect.effect + '(' + effectValue + currentEffect.typeValue + ')';
+  scaleLevel.style.width = effectDepth + '%';
+  scaleValueInput.value = effectDepth;
+}
 
 scalePin.addEventListener('mousedown', function (evt) {
   evt.preventDefault();
@@ -317,10 +360,9 @@ scalePin.addEventListener('mousedown', function (evt) {
     }
 
     scalePin.style.left = newCoordinateX + 'px';
-    var scaleValue = Math.round(newCoordinateX * 100 / 453);
-    var computedStyle = getComputedStyle(previewPicture);
-    var filter = computedStyle.filter;
-    changeEffectDepth(filter, scaleValue);
+    var scaleValue = Math.round(newCoordinateX * 100 / rightEdge);
+
+    changeEffectValue(effectTypes[4], scaleValue);
   };
 
   var onMouseUp = function (upEvt) {
