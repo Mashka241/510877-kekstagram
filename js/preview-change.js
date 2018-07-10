@@ -11,7 +11,6 @@
   var resizeMinus = document.querySelector('.resize__control--minus');
   var resizePlus = document.querySelector('.resize__control--plus');
   var resizeValue = document.querySelector('.resize__control--value');
-  
   var defaultFilterInput = document.querySelector('#effect-none');
 
   uploadOpen.addEventListener('change', function () {

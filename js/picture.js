@@ -9,7 +9,7 @@
     photoElement.querySelector('.picture__stat--likes').textContent = photo.likes;
     photoElement.querySelector('.picture__stat--comments').textContent = photo.comments;
     photoElement.addEventListener('click', function () {
-      renderBigPicture(photo);
+      window.renderBigPicture(photo);
     });
     return photoElement;
   };
@@ -23,5 +23,5 @@
     return fragment;
   };
 
-  picturesList.appendChild(renderPhotos(photosArray));
+  picturesList.appendChild(renderPhotos(window.photosArray));
 })();

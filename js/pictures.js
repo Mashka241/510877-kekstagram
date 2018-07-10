@@ -58,7 +58,7 @@ for (var i = 0; i < 25; i++) {
   photosArray.push(newPhoto);
 }
 
-//отрисовка фотографий
+// отрисовка фотографий
 
 var picturesList = document.querySelector('.pictures');
 var similarPhotoTemplate = document.querySelector('#picture').content.querySelector('.picture__link');
@@ -85,7 +85,7 @@ var renderPhotos = function (arr) {
 
 picturesList.appendChild(renderPhotos(photosArray));
 
-//отрисовка большой фотографии
+// отрисовка большой фотографии
 
 var bigPicture = document.querySelector('.big-picture');
 var bigPictureClose = bigPicture.querySelector('.big-picture__cancel');
@@ -129,7 +129,7 @@ bigPictureClose.addEventListener('keydown', onPictureCloseEnterPress);
 
 document.addEventListener('keydown', onPictureEscPress);
 
-//редактирование изображения
+// редактирование изображения
 
 var uploadOpen = document.querySelector('#upload-file');
 var upload = document.querySelector('.img-upload__overlay');
@@ -234,7 +234,7 @@ resizePlus.addEventListener('click', function () {
   resizePicture('plus');
 });
 
-//валидация формы
+// валидация формы
 
 var getNewArrayWithoutIndex = function (array, index) {
   return array.slice(0, index).concat(array.slice(index + 1));
@@ -301,7 +301,7 @@ hashtagField.addEventListener('change', function () {
   validateHashtagField();
 });
 
-//редактирование изображения
+// редактирование изображения
 
 var effectsScale = document.querySelector('.img-upload__scale');
 var scalePin = effectsScale.querySelector('.scale__pin');

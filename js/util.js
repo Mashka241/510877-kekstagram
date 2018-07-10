@@ -1,9 +1,8 @@
-'use strct';
+'use strict';
 
 (function () {
   var ESC_KEYCODE = 27;
   var ENTER_KEYCODE = 13;
-  
   window.util = {
     isEscEvent: function (evt, action, parameter) {
       if (evt.keyCode === ESC_KEYCODE) {
