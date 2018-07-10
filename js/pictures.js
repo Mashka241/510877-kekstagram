@@ -201,7 +201,7 @@ effectsList.addEventListener('click', function (evt) {
     previewPicture.style.filter = 'none';
     if (evt.target.value !== 'none') {
       effectsScale.classList.remove('hidden');
-      addEffect(evt.target.value);      
+      addEffect(evt.target.value);
     }
   }
 });
@@ -391,9 +391,9 @@ scalePin.addEventListener('mousedown', function (evt) {
     document.removeEventListener('mouseup', onMouseUp);
 
     if (dragged) {
-      var onClickPreventDefault = function (evt) {
-        evt.preventDefault();
-        scalePin.removeEventListener('click', onClickPreventDefault)
+      var onClickPreventDefault = function (clickEvt) {
+        clickEvt.preventDefault();
+        scalePin.removeEventListener('click', onClickPreventDefault);
       };
       scalePin.addEventListener('click', onClickPreventDefault);
     }
