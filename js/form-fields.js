@@ -82,7 +82,7 @@
   };
 
   uploadForm.addEventListener('submit', function (evt) {
-    window.upload(new FormData(form), function (response) {
+    window.upload(new FormData(form), function () {
       pictureSetup.classList.add('hidden');
     }, onError);
     evt.preventDefault();
