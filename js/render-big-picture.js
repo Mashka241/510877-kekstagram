@@ -10,7 +10,7 @@
     bigPicture.querySelector('.comments-count').textContent = data.comments.length;
     var socialComments = bigPicture.querySelector('.social__comments');
 
-    for (var index = 0; index < data.comments.length; index++) {
+    for (var index = 0; index < 3; index++) {
       var comment = '<li class="social__comment social__comment--text"><img class="social__picture" src="img/avatar-' + window.util.getRandomNumber(1, 6) + '.svg" alt="Аватар комментатора фотографии" width="35" height="35"><p class="social__text">' + data.comments[index] + '</p></li>';
       socialComments.insertAdjacentHTML('beforeend', comment);
     }

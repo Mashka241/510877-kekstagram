@@ -76,10 +76,15 @@
   pictureSetup.appendChild(uploadError);
   // uploadError.classList.remove('hidden');
 
+  var onError = function (message) {
+    console.error(message);
+    uploadError.classList.remove('hidden');
+  };
+
   uploadForm.addEventListener('submit', function (evt) {
     window.upload(new FormData(form), function (response) {
       pictureSetup.classList.add('hidden');
-    });
+    }, onError);
     evt.preventDefault();
   });
 
