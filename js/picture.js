@@ -25,12 +25,18 @@
 
   // picturesList.appendChild(renderPhotos(window.photosArray));
 
-  window.load(function (photos) {
+  var onLoad = function (photos) {
     var fragment = document.createDocumentFragment();
     for (var i = 0; i < photos.length; i++) {
       fragment.appendChild(renderPhoto(photos[i]));
     }
     picturesList.appendChild(fragment);
-  });
+  };
+
+  var onError = function (message) {
+    console.error(message);
+  };
+
+  window.load(onLoad, onError);
 
 })();

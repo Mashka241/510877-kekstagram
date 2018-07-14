@@ -75,7 +75,6 @@
   var uploadError = similarUploadError.cloneNode(true);
   pictureSetup.appendChild(uploadError);
   // uploadError.classList.remove('hidden');
-  
 
   uploadForm.addEventListener('submit', function (evt) {
     window.upload(new FormData(form), function (response) {
