@@ -50,14 +50,12 @@
   window.upload = function (data, onLoad, onError) {
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
-    console.log('начало', xhr.status);
 
     xhr.addEventListener('load', function () {
       var error;
-      console.log(xhr.status);
       switch (xhr.status) {
         case 200:
-          onLoad(xhr.response);
+          onLoad();
           break;
         case 400:
           error = 'Неверный запрос';
@@ -85,6 +83,5 @@
 
     xhr.open('POST', URL);
     xhr.send(data);
-    console.log('конец', xhr.status);
   };
 })();
