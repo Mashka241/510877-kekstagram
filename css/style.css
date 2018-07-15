@@ -38,6 +38,23 @@ main {
   position: relative;
 }
 
+/* сообщение об ошибке */
+
+.pop-up {
+  position: fixed;
+  top: 75px;
+  left: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 280px;
+  background-color: white;
+  color: black;
+  box-shadow: 0 7px 15px rgba(0, 1, 1, 0.15);
+  z-index: 5;
+  transform: translateX(-50%);
+}
+
 .content-box-component {
   -webkit-box-sizing: content-box;
           box-sizing: content-box;
@@ -1282,3 +1299,5 @@ main {
     grid-row: 1 / span 3;
   }
 }
+
+

@@ -6,7 +6,6 @@
   var uploadForm = document.querySelector('.img-upload__form');
   var commentField = uploadForm.querySelector('.text__description');
   var hashtagField = uploadForm.querySelector('.text__hashtags');
-  // var uploadStart = document.querySelector('.img-upload__start');
   window.formFields = {
     comments: commentField,
     hashtags: hashtagField
@@ -78,7 +77,6 @@
   // uploadError.classList.remove('hidden');
 
   var onError = function (message) {
-    console.error(message);
     uploadForm.classList.add('hidden');
     uploadError.classList.remove('hidden');
   };

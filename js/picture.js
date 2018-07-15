@@ -33,8 +33,12 @@
     picturesList.appendChild(fragment);
   };
 
+  var loadError = document.querySelector('.pop-up--failure');
+  var errorText = loadError.querySelector('.pop-up__text');
+
   var onError = function (message) {
-    console.error(message);
+    errorText.textContent = message;
+    loadError.classList.remove('hidden');
   };
 
   window.load(onLoad, onError);
