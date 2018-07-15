@@ -78,6 +78,7 @@
 
   var onError = function (message) {
     uploadForm.classList.add('hidden');
+    uploadError.textContent = message;
     uploadError.classList.remove('hidden');
   };
 
