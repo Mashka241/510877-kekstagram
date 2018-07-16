@@ -4,6 +4,7 @@
   var MAX_HASHTAG_LENGTH = 20;
   var pictureSetup = document.querySelector('.img-upload');
   var uploadForm = document.querySelector('.img-upload__form');
+  var uploadOverlay = document.querySelector('.img-upload__overlay');
   var commentField = uploadForm.querySelector('.text__description');
   var hashtagField = uploadForm.querySelector('.text__hashtags');
   window.formFields = {
@@ -74,7 +75,6 @@
   var similarUploadError = document.querySelector('#picture').content.querySelector('.img-upload__message--error');
   var uploadError = similarUploadError.cloneNode(true);
   pictureSetup.appendChild(uploadError);
-  // uploadError.classList.remove('hidden');
 
   var onError = function (message) {
     uploadForm.classList.add('hidden');
@@ -84,9 +84,8 @@
 
   uploadForm.addEventListener('submit', function (evt) {
     window.upload(new FormData(uploadForm), function () {
-      pictureSetup.classList.add('hidden');
-      hashtagField.value = '';
-      commentField.value = '';
+      uploadOverlay.classList.add('hidden');
+      uploadForm.reset();
     }, onError);
     evt.preventDefault();
   });
