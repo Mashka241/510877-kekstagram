@@ -102,7 +102,8 @@ var renderBigPicture = function (data) {
     socialComments.insertAdjacentHTML('beforeend', comment);
   }
 
-  bigPicture.querySelector('.social__caption').textContent = data.description;
+  // bigPicture.querySelector('.social__caption').textContent = data.description;
+  bigPicture.querySelector('.social__caption').textContent = data.photo.comments[0];
   bigPicture.querySelector('.social__comment-count').classList.add('visually-hidden');
   bigPicture.querySelector('.social__loadmore').classList.add('visually-hidden');
   bigPicture.classList.remove('hidden');

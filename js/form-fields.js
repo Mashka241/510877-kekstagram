@@ -2,7 +2,9 @@
 (function () {
   var MAX_HASHTAGS_NUMBER = 5;
   var MAX_HASHTAG_LENGTH = 20;
+  var pictureSetup = document.querySelector('.img-upload');
   var uploadForm = document.querySelector('.img-upload__form');
+  var uploadOverlay = document.querySelector('.img-upload__overlay');
   var commentField = uploadForm.querySelector('.text__description');
   var hashtagField = uploadForm.querySelector('.text__hashtags');
   window.formFields = {
@@ -63,11 +65,29 @@
     return true;
   };
 
+  // uploadForm.addEventListener('submit', function (evt) {
+  //   evt.preventDefault();
+  //   if (validateHashtagField()) {
+  //     uploadForm.submit();
+  //   }
+  // });
+
+  var similarUploadError = document.querySelector('#picture').content.querySelector('.img-upload__message--error');
+  var uploadError = similarUploadError.cloneNode(true);
+  pictureSetup.appendChild(uploadError);
+
+  var onError = function (message) {
+    uploadForm.classList.add('hidden');
+    uploadError.textContent = message;
+    uploadError.classList.remove('hidden');
+  };
+
   uploadForm.addEventListener('submit', function (evt) {
+    window.upload(new FormData(uploadForm), function () {
+      uploadOverlay.classList.add('hidden');
+      uploadForm.reset();
+    }, onError);
     evt.preventDefault();
-    if (validateHashtagField()) {
-      uploadForm.submit();
-    }
   });
 
   hashtagField.addEventListener('change', function () {
