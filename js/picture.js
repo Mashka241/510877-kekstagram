@@ -48,11 +48,6 @@
 
   var filtersList = document.querySelector('.img-filters');
   var filtersForm = document.querySelector('.img-filters__form');
-  
-
-  // var filterPopular = filtersList.querySelector('#filter-popular');
-  // var filterDiscussed = filtersList.querySelector('#filter-discussed');
-  // var filterNew = filtersList.querySelector('#filter-new');
 
   var sortDiscussedPhotos = function (arr) {
     var arrCopy = arr.slice();
@@ -71,9 +66,8 @@
     });
     var currentArray = [];
 
-    if (selectedPhotos.length === 0) {      
+    if (selectedPhotos.length === 0) {
       currentArray = arrCopy.slice(0, 10);
-      
     } else {
       var newArray = arrCopy.filter(function (item) {
         return selectedPhotos.indexOf(item) === -1;
@@ -101,8 +95,8 @@
       window.debounce(function () {
         renderPhotos(filterData[filter](photosArray));
       });
-    }    
-  }
+    }
+  };
 
   var onFilterClick = function (evt) {
     allFilters.forEach(function (item) {
