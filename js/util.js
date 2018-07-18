@@ -9,7 +9,6 @@
         action(parameter);
       }
     },
-    ESC_KEYCODE: 27,
     isEnterEvent: function (evt, action, parameter) {
       if (evt.keyCode === ENTER_KEYCODE) {
         action(parameter);

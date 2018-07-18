@@ -48,16 +48,18 @@
     previewPicture.style.transform = 'scale(1)';
   };
 
-  var onPopupEscPress = function (evt) {
-    if (evt.keyCode === window.util.ESC_KEYCODE) {
-      if (evt.target === window.formFields.hashtags) {
-        window.formFields.hashtags.blur();
-      } else if (evt.target === window.formFields.comments) {
-        window.formFields.comments.blur();
-      } else {
-        closePopup();
-      }
+  var checkActiveFields = function (evt) {
+    if (evt.target === window.formFields.hashtags) {
+      window.formFields.hashtags.blur();
+    } else if (evt.target === window.formFields.comments) {
+      window.formFields.comments.blur();
+    } else {
+      closePopup();
     }
+  };
+
+  var onPopupEscPress = function (evt) {
+    window.util.isEscEvent(evt, checkActiveFields, evt);
   };
 
   var onButtonCancelClick = function () {
