@@ -65,13 +65,6 @@
     return true;
   };
 
-  // uploadForm.addEventListener('submit', function (evt) {
-  //   evt.preventDefault();
-  //   if (validateHashtagField()) {
-  //     uploadForm.submit();
-  //   }
-  // });
-
   var similarUploadError = document.querySelector('#picture').content.querySelector('.img-upload__message--error');
   var uploadError = similarUploadError.cloneNode(true);
   pictureSetup.appendChild(uploadError);
