@@ -33,11 +33,15 @@
   };
 
   var onPictureEscPress = function (evt) {
-    window.util.isEscEvent(evt, closePicture);
+    if (window.util.isEscEvent(evt, closePicture)) {
+      document.removeEventListener('keydown', onPictureEscPress);
+    };
   };
 
   var onPictureCloseEnterPress = function (evt) {
-    window.util.isEnterEvent(evt, closePicture);
+    if (window.util.isEnterEvent(evt, closePicture)) {
+      document.removeEventListener('keydown', onPictureCloseEnterPress);
+    };
   };
 
   bigPicture.addEventListener('click', closePicture);
