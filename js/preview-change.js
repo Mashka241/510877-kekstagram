@@ -106,7 +106,7 @@
   var onPopupEscPress = function (evt) {
     if (window.util.isEscEvent(evt, checkActiveFields, evt)) {
       document.removeEventListener('keydown', onPopupEscPress);
-    };
+    }
   };
 
   var onButtonCancelClick = function () {
