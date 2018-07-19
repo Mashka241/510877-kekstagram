@@ -43,8 +43,6 @@
   };
 })();
 
-// отправка формы
-
 (function () {
   var URL = 'https://js.dump.academy/kekstagram';
   window.upload = function (data, onLoad, onError) {

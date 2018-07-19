@@ -4,6 +4,7 @@
   var MIN_PICTURE_SIZE = 25;
   var MAX_PICTURE_SIZE = 100;
   var DEFAULT_FILTER = 'none';
+  var ONE_HUNDRED_PERCENT = 100;
 
   var uploadOpen = document.querySelector('#upload-file');
   var upload = document.querySelector('.img-upload__overlay');
@@ -29,8 +30,8 @@
   var addEffect = function (effect) {
     var effectClass = 'effects__preview--' + effect;
     previewPicture.classList.add(effectClass);
-    scaleLevel.style.width = 100 + '%';
-    scaleValueInput.value = 100;
+    scaleLevel.style.width = ONE_HUNDRED_PERCENT + '%';
+    scaleValueInput.value = ONE_HUNDRED_PERCENT;
     scalePin.style.left = scaleLine.offsetWidth + 'px';
     for (var i = 0; i < effectTypes.length; i++) {
       var curEffect = effectTypes[i];
@@ -95,7 +96,7 @@
     }
     if (size >= MIN_PICTURE_SIZE && size <= MAX_PICTURE_SIZE) {
       resizeValue.value = size + '%';
-      previewPicture.style.transform = 'scale(' + (size / 100) + ')';
+      previewPicture.style.transform = 'scale(' + (size / ONE_HUNDRED_PERCENT) + ')';
     }
   };
 
@@ -158,7 +159,7 @@
     }];
 
   var changeEffectValue = function (currentEffect, effectDepth) {
-    var effectValue = ((currentEffect.max - currentEffect.min) * effectDepth / 100) + currentEffect.min;
+    var effectValue = ((currentEffect.max - currentEffect.min) * effectDepth / ONE_HUNDRED_PERCENT) + currentEffect.min;
     previewPicture.style.filter = currentEffect.effect + '(' + effectValue + currentEffect.typeValue + ')';
     scaleLevel.style.width = effectDepth + '%';
     scaleValueInput.value = effectDepth;
@@ -189,7 +190,7 @@
       }
 
       scalePin.style.left = newCoordinateX + 'px';
-      var scaleValue = Math.round(newCoordinateX * 100 / rightEdge);
+      var scaleValue = Math.round(newCoordinateX * ONE_HUNDRED_PERCENT / rightEdge);
 
       for (var i = 0; i < effectTypes.length; i++) {
         var currentEffect = effectTypes[i];
