@@ -857,7 +857,7 @@ main {
 }
 
 .text__hashtags--invalid {
-  outline: 1px solid red;
+  border: 1px solid red;
 }
 
 .text__description {
