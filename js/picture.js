@@ -4,6 +4,38 @@
   var picturesList = document.querySelector('.pictures');
   var similarPhotoTemplate = document.querySelector('#picture').content.querySelector('.picture__link');
 
+  var sortNewPhotos = function (arr) {
+    var copiedPhotos = arr.slice();
+    copiedPhotos.sort(function () {
+      return Math.random() - 0.5;
+    });
+    var showedPhotos = [];
+
+    if (selectedPhotos.length === 0) {
+      showedPhotos = copiedPhotos.slice(0, SHOWED_PICTURES_COUNT);
+    } else {
+      var uniquePhotos = copiedPhotos.filter(function (item) {
+        return selectedPhotos.indexOf(item) === -1;
+      });
+      showedPhotos = uniquePhotos.slice(0, SHOWED_PICTURES_COUNT);
+    }
+    selectedPhotos = showedPhotos;
+    return showedPhotos;
+  };
+
+  var sortDiscussedPhotos = function (arr) {
+    var copiedPhotos = arr.slice();
+    copiedPhotos.sort(function (first, second) {
+      return second.comments.length - first.comments.length;
+    });
+    return copiedPhotos;
+  };
+
+  var filterData = {
+    'filter-new': sortNewPhotos,
+    'filter-discussed': sortDiscussedPhotos
+  };
+
   var renderPhoto = function (photo) {
     var photoElement = similarPhotoTemplate.cloneNode(true);
     photoElement.querySelector('.picture__img').src = photo.url;
@@ -50,49 +82,17 @@
   var filtersList = document.querySelector('.img-filters');
   var filtersForm = document.querySelector('.img-filters__form');
 
-  var sortDiscussedPhotos = function (arr) {
-    var copiedPhotos = arr.slice();
-    copiedPhotos.sort(function (first, second) {
-      return second.comments.length - first.comments.length;
-    });
-    return copiedPhotos;
-  };
-
   var selectedPhotos = [];
-
-  var sortNewPhotos = function (arr) {
-    var copiedPhotos = arr.slice();
-    copiedPhotos.sort(function () {
-      return Math.random() - 0.5;
-    });
-    var showedPhotos = [];
-
-    if (selectedPhotos.length === 0) {
-      showedPhotos = copiedPhotos.slice(0, SHOWED_PICTURES_COUNT);
-    } else {
-      var uniquePhotos = copiedPhotos.filter(function (item) {
-        return selectedPhotos.indexOf(item) === -1;
-      });
-      showedPhotos = uniquePhotos.slice(0, SHOWED_PICTURES_COUNT);
-    }
-    selectedPhotos = showedPhotos;
-    return showedPhotos;
-  };
 
   var allFilters = Array.from(document.querySelectorAll('.img-filters__button'));
 
-  var filterData = {
-    'filter-new': sortNewPhotos,
-    'filter-discussed': sortDiscussedPhotos
-  };
-
   var filterPhotos = function (filter) {
     if (filter === 'filter-popular') {
-      window.debounce(function () {
+      window.util.debounce(function () {
         renderPhotos(photosArray);
       });
     } else {
-      window.debounce(function () {
+      window.util.debounce(function () {
         renderPhotos(filterData[filter](photosArray));
       });
     }

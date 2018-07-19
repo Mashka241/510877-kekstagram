@@ -14,6 +14,50 @@
   var resizeValue = document.querySelector('.resize__control--value');
   var defaultFilterInput = document.querySelector('#effect-none');
 
+  var effectTypes = [
+    {
+      value: 'none',
+      effect: '',
+      min: '',
+      max: '',
+      typeValue: ''
+    },
+    {
+      value: 'chrome',
+      effect: 'grayscale',
+      min: 0,
+      max: 1,
+      typeValue: '',
+    },
+    {
+      value: 'sepia',
+      effect: 'sepia',
+      min: 0,
+      max: 1,
+      typeValue: ''
+    },
+    {
+      value: 'marvin',
+      effect: 'invert',
+      min: 0,
+      max: 100,
+      typeValue: '%'
+    },
+    {
+      value: 'phobos',
+      effect: 'blur',
+      min: 0,
+      max: 3,
+      typeValue: 'px'
+    },
+    {
+      value: 'heat',
+      effect: 'brightness',
+      min: 1,
+      max: 3,
+      typeValue: ''
+    }];
+
   uploadOpen.addEventListener('change', function () {
     upload.classList.remove('hidden');
     addEffect(DEFAULT_FILTER);
@@ -60,7 +104,9 @@
   };
 
   var onPopupEscPress = function (evt) {
-    window.util.isEscEvent(evt, checkActiveFields, evt);
+    if (window.util.isEscEvent(evt, checkActiveFields, evt)) {
+      document.removeEventListener('keydown', onPopupEscPress);
+    }
   };
 
   var onButtonCancelClick = function () {
@@ -113,50 +159,6 @@
   var scaleValueInput = effectsScale.querySelector('.scale__value');
   var scaleLevel = effectsScale.querySelector('.scale__level');
   var scaleLine = effectsScale.querySelector('.scale__line');
-
-  var effectTypes = [
-    {
-      value: 'none',
-      effect: '',
-      min: '',
-      max: '',
-      typeValue: ''
-    },
-    {
-      value: 'chrome',
-      effect: 'grayscale',
-      min: 0,
-      max: 1,
-      typeValue: '',
-    },
-    {
-      value: 'sepia',
-      effect: 'sepia',
-      min: 0,
-      max: 1,
-      typeValue: ''
-    },
-    {
-      value: 'marvin',
-      effect: 'invert',
-      min: 0,
-      max: 100,
-      typeValue: '%'
-    },
-    {
-      value: 'phobos',
-      effect: 'blur',
-      min: 0,
-      max: 3,
-      typeValue: 'px'
-    },
-    {
-      value: 'heat',
-      effect: 'brightness',
-      min: 1,
-      max: 3,
-      typeValue: ''
-    }];
 
   var changeEffectValue = function (currentEffect, effectDepth) {
     var effectValue = ((currentEffect.max - currentEffect.min) * effectDepth / ONE_HUNDRED_PERCENT) + currentEffect.min;
