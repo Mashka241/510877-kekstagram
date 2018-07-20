@@ -76,7 +76,7 @@
   };
 
   uploadForm.addEventListener('submit', function (evt) {
-    window.upload(new FormData(uploadForm), function () {
+    window.backend.upload(new FormData(uploadForm), function () {
       uploadOverlay.classList.add('hidden');
       uploadForm.reset();
     }, onError);

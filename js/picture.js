@@ -77,7 +77,7 @@
     loadError.classList.remove('hidden');
   };
 
-  window.load(onLoad, onError);
+  window.backend.load(onLoad, onError);
 
   var filtersList = document.querySelector('.img-filters');
   var filtersForm = document.querySelector('.img-filters__form');
