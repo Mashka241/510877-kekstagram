@@ -17,9 +17,9 @@
   };
 
   var isDouble = function (array) {
-    array.forEach(function (item, index, array) {
-      var newArray = getNewArrayWithoutIndex(array, index);
-      if (newArray.indexOf(array[index]) !== -1) {
+    array.forEach(function (item, index, arr) {
+      var newArray = getNewArrayWithoutIndex(arr, index);
+      if (newArray.indexOf(item) !== -1) {
         return true;
       }
     });
