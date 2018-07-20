@@ -55,9 +55,9 @@
     });
 
     var fragment = document.createDocumentFragment();
-    for (var i = 0; i < photoArr.length; i++) {
+    photoArr.forEach(function (photo, i, photoArr) {
       fragment.appendChild(renderPhoto(photoArr[i]));
-    }
+    });
     picturesList.appendChild(fragment);
   };
 

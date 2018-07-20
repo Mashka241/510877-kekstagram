@@ -1,7 +1,7 @@
 'use strict';
 (function () {
-  var URL_UPLOAD = 'https://js.dump.academy/kekstagram/data';
-  var URL_DOWNLOAD = 'https://js.dump.academy/kekstagram';
+  var URL_DOWNLOAD = 'https://js.dump.academy/kekstagram/data';
+  var URL_UPLOAD = 'https://js.dump.academy/kekstagram';
   var SUCCESS_CODE = 200;
   var BAD_REQUEST_CODE = 400;
   var NOT_FOUND_CODE = 404;
@@ -41,7 +41,7 @@
 
       xhr.timeout = 10000;
 
-      xhr.open('GET', URL_UPLOAD);
+      xhr.open('GET', URL_DOWNLOAD);
       xhr.send();
     },
     upload: function (data, onLoad, onError) {
@@ -78,7 +78,7 @@
 
       xhr.timeout = 10000;
 
-      xhr.open('POST', URL_DOWNLOAD);
+      xhr.open('POST', URL_UPLOAD);
       xhr.send(data);
     }
   };

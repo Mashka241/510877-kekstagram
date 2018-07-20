@@ -5,6 +5,8 @@
   var MAX_PICTURE_SIZE = 100;
   var DEFAULT_FILTER = 'none';
   var ONE_HUNDRED_PERCENT = 100;
+  var RADIX_PARAMETER = 10;
+  var LEFT_SCALE_EDGE = 0;
 
   var uploadOpen = document.querySelector('#upload-file');
   var upload = document.querySelector('.img-upload__overlay');
@@ -77,12 +79,12 @@
     scaleLevel.style.width = ONE_HUNDRED_PERCENT + '%';
     scaleValueInput.value = ONE_HUNDRED_PERCENT;
     scalePin.style.left = scaleLine.offsetWidth + 'px';
-    for (var i = 0; i < effectTypes.length; i++) {
-      var curEffect = effectTypes[i];
+
+    effectTypes.forEach(function (curEffect) {
       if (curEffect.value === effect) {
         previewPicture.style.filter = curEffect.effect + '(' + curEffect.max + curEffect.typeValue + ')';
       }
-    }
+    });
   };
 
   var closePopup = function () {
@@ -133,7 +135,7 @@
   });
 
   var resizePicture = function (operation) {
-    var currentSize = parseInt(resizeValue.value, 10);
+    var currentSize = parseInt(resizeValue.value, RADIX_PARAMETER);
     var size;
     if (operation === 'minus') {
       size = currentSize - SIZE_STEP;
@@ -164,7 +166,7 @@
     var effectValue = ((currentEffect.max - currentEffect.min) * effectDepth / ONE_HUNDRED_PERCENT) + currentEffect.min;
     previewPicture.style.filter = currentEffect.effect + '(' + effectValue + currentEffect.typeValue + ')';
     scaleLevel.style.width = effectDepth + '%';
-    scaleValueInput.value = effectDepth;
+    scaleValueInput.value = effectDepth + '';
   };
 
   scalePin.addEventListener('mousedown', function (evt) {
@@ -181,8 +183,8 @@
 
       var newCoordinateX = scalePin.offsetLeft - shiftX;
 
-      if (newCoordinateX < 0) {
-        newCoordinateX = 0;
+      if (newCoordinateX < LEFT_SCALE_EDGE) {
+        newCoordinateX = LEFT_SCALE_EDGE;
       }
 
       var rightEdge = scaleLine.offsetWidth;
@@ -194,12 +196,11 @@
       scalePin.style.left = newCoordinateX + 'px';
       var scaleValue = Math.round(newCoordinateX * ONE_HUNDRED_PERCENT / rightEdge);
 
-      for (var i = 0; i < effectTypes.length; i++) {
-        var currentEffect = effectTypes[i];
+      effectTypes.forEach(function (currentEffect) {
         if (previewPicture.classList.contains('effects__preview--' + currentEffect.value)) {
           changeEffectValue(currentEffect, scaleValue);
         }
-      }
+      });
     };
 
     var onMouseUp = function (upEvt) {

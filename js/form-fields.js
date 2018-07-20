@@ -2,6 +2,7 @@
 (function () {
   var MAX_HASHTAGS_NUMBER = 5;
   var MAX_HASHTAG_LENGTH = 20;
+  var MIN_HASHTAG_LENGTH = 1;
   var pictureSetup = document.querySelector('.img-upload');
   var uploadForm = document.querySelector('.img-upload__form');
   var uploadOverlay = document.querySelector('.img-upload__overlay');
@@ -16,12 +17,12 @@
   };
 
   var isDouble = function (array) {
-    for (var index = 0; index < array.length; index++) {
+    array.forEach(function (item, index, array) {
       var newArray = getNewArrayWithoutIndex(array, index);
       if (newArray.indexOf(array[index]) !== -1) {
         return true;
       }
-    }
+    });
     return false;
   };
 
@@ -43,13 +44,13 @@
       hashtagField.classList.add('text__hashtags--invalid');
       return false;
     }
-    for (var j = 0; j < hashtagArray.length; j++) {
-      var currentHashtag = hashtagArray[j];
+
+    hashtagArray.forEach(function (currentHashtag) {
       if (currentHashtag[0] !== '#') {
         hashtagField.setCustomValidity('хэш-тег должен начинаться с символа #');
         hashtagField.classList.add('text__hashtags--invalid');
         return false;
-      } else if (currentHashtag.length === 1 && currentHashtag[0] === '#') {
+      } else if (currentHashtag.length === MIN_HASHTAG_LENGTH && currentHashtag[0] === '#') {
         hashtagField.setCustomValidity('хеш-тег не может состоять только из одной решётки');
         hashtagField.classList.add('text__hashtags--invalid');
         return false;
@@ -58,7 +59,8 @@
         hashtagField.classList.add('text__hashtags--invalid');
         return false;
       }
-    }
+    });
+
     hashtagField.setCustomValidity('');
     hashtagField.classList.remove('text__hashtags--invalid');
     return true;
