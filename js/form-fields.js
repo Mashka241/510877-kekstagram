@@ -16,14 +16,13 @@
   };
 
   var isDouble = function (array) {
-    var counter = 0;
     for (var index = 0; index < array.length; index++) {
       var newArray = getNewArrayWithoutIndex(array, index);
       if (newArray.indexOf(array[index]) !== -1) {
-        counter += 1;
+        return true;
       }
     }
-    return counter > 0;
+    return false;
   };
 
   var validateHashtagField = function () {
