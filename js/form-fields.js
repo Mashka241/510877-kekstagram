@@ -2,7 +2,6 @@
 (function () {
   var MAX_HASHTAGS_NUMBER = 5;
   var MAX_HASHTAG_LENGTH = 20;
-  var MIN_HASHTAG_LENGTH = 1;
   var pictureSetup = document.querySelector('.img-upload');
   var uploadForm = document.querySelector('.img-upload__form');
   var uploadOverlay = document.querySelector('.img-upload__overlay');
@@ -17,12 +16,12 @@
   };
 
   var isDouble = function (array) {
-    array.forEach(function (item, index, arr) {
-      var newArray = getNewArrayWithoutIndex(arr, index);
-      if (newArray.indexOf(item) !== -1) {
+    for (var index = 0; index < array.length; index++) {
+      var newArray = getNewArrayWithoutIndex(array, index);
+      if (newArray.indexOf(array[index]) !== -1) {
         return true;
       }
-    });
+    }
     return false;
   };
 
@@ -44,13 +43,13 @@
       hashtagField.classList.add('text__hashtags--invalid');
       return false;
     }
-
-    hashtagArray.forEach(function (currentHashtag) {
+    for (var j = 0; j < hashtagArray.length; j++) {
+      var currentHashtag = hashtagArray[j];
       if (currentHashtag[0] !== '#') {
         hashtagField.setCustomValidity('хэш-тег должен начинаться с символа #');
         hashtagField.classList.add('text__hashtags--invalid');
         return false;
-      } else if (currentHashtag.length === MIN_HASHTAG_LENGTH && currentHashtag[0] === '#') {
+      } else if (currentHashtag.length === 1 && currentHashtag[0] === '#') {
         hashtagField.setCustomValidity('хеш-тег не может состоять только из одной решётки');
         hashtagField.classList.add('text__hashtags--invalid');
         return false;
@@ -58,9 +57,12 @@
         hashtagField.setCustomValidity('максимальная длина одного хэш-тега 20 символов, включая решётку');
         hashtagField.classList.add('text__hashtags--invalid');
         return false;
+      } else if (currentHashtag.indexOf('#', 1) > 0) {
+        hashtagField.setCustomValidity('хэш-теги должны быть разделены пробелами');
+        hashtagField.classList.add('text__hashtags--invalid');
+        return false;
       }
-    });
-
+    }
     hashtagField.setCustomValidity('');
     hashtagField.classList.remove('text__hashtags--invalid');
     return true;
@@ -76,9 +78,13 @@
     uploadError.classList.remove('hidden');
   };
 
+  var previewPicture = document.querySelector('.img-upload__preview img');
+
   uploadForm.addEventListener('submit', function (evt) {
     window.backend.upload(new FormData(uploadForm), function () {
       uploadOverlay.classList.add('hidden');
+      previewPicture.className = '';
+      previewPicture.style.filter = 'none';
       uploadForm.reset();
     }, onError);
     evt.preventDefault();

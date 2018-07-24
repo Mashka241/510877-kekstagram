@@ -78,6 +78,7 @@
     previewPicture.classList.add(effectClass);
     scaleLevel.style.width = ONE_HUNDRED_PERCENT + '%';
     scaleValueInput.value = ONE_HUNDRED_PERCENT;
+    scaleValueInput.setAttribute('value', ONE_HUNDRED_PERCENT + '');
     scalePin.style.left = scaleLine.offsetWidth + 'px';
 
     effectTypes.forEach(function (curEffect) {
@@ -119,7 +120,7 @@
 
   document.addEventListener('keydown', onPopupEscPress);
 
-  var previewPicture = document.querySelector('.img-upload__preview img');
+  window.previewPicture = document.querySelector('.img-upload__preview img');
   var effectsList = document.querySelector('.effects__list');
 
   effectsList.addEventListener('click', function (evt) {
@@ -167,6 +168,7 @@
     previewPicture.style.filter = currentEffect.effect + '(' + effectValue + currentEffect.typeValue + ')';
     scaleLevel.style.width = effectDepth + '%';
     scaleValueInput.value = effectDepth + '';
+    scaleValueInput.setAttribute('value', effectDepth + '');
   };
 
   scalePin.addEventListener('mousedown', function (evt) {

@@ -45,7 +45,12 @@
     }
   };
 
-  bigPicture.addEventListener('click', closePicture);
+  var onPictureCloseClick = function () {
+    closePicture();
+  };
+
+  bigPictureClose.addEventListener('click', onPictureCloseClick);
+
   bigPictureClose.addEventListener('keydown', onPictureCloseEnterPress);
 
   document.addEventListener('keydown', onPictureEscPress);
