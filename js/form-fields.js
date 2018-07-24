@@ -15,14 +15,17 @@
     return array.slice(0, index).concat(array.slice(index + 1));
   };
 
+  var isElementDouble = function (element, index, arr) {
+    var newArray = getNewArrayWithoutIndex(arr, index);
+    return newArray.indexOf(element) !== -1;
+  };
+
   var isDouble = function (array) {
-    for (var index = 0; index < array.length; index++) {
-      var newArray = getNewArrayWithoutIndex(array, index);
-      if (newArray.indexOf(array[index]) !== -1) {
-        return true;
-      }
+    if (array.some(isElementDouble)) {
+      return true;
+    } else {
+      return false;
     }
-    return false;
   };
 
   var validateHashtagField = function () {
@@ -38,31 +41,59 @@
       hashtagField.classList.add('text__hashtags--invalid');
       return false;
     }
+
     if (isDouble(hashtagArray)) {
       hashtagField.setCustomValidity('один и тот же хэш-тег не может быть использован дважды');
       hashtagField.classList.add('text__hashtags--invalid');
       return false;
     }
-    for (var j = 0; j < hashtagArray.length; j++) {
-      var currentHashtag = hashtagArray[j];
-      if (currentHashtag[0] !== '#') {
-        hashtagField.setCustomValidity('хэш-тег должен начинаться с символа #');
-        hashtagField.classList.add('text__hashtags--invalid');
-        return false;
-      } else if (currentHashtag.length === 1 && currentHashtag[0] === '#') {
-        hashtagField.setCustomValidity('хеш-тег не может состоять только из одной решётки');
-        hashtagField.classList.add('text__hashtags--invalid');
-        return false;
-      } else if (currentHashtag.length > MAX_HASHTAG_LENGTH) {
-        hashtagField.setCustomValidity('максимальная длина одного хэш-тега 20 символов, включая решётку');
-        hashtagField.classList.add('text__hashtags--invalid');
-        return false;
-      } else if (currentHashtag.indexOf('#', 1) > 0) {
-        hashtagField.setCustomValidity('хэш-теги должны быть разделены пробелами');
-        hashtagField.classList.add('text__hashtags--invalid');
-        return false;
-      }
+    // for (var j = 0; j < hashtagArray.length; j++) {
+    //   var currentHashtag = hashtagArray[j];
+    //   if (currentHashtag[0] !== '#') {
+    //     hashtagField.setCustomValidity('хэш-тег должен начинаться с символа #');
+    //     hashtagField.classList.add('text__hashtags--invalid');
+    //     return false;
+    //   } else if (currentHashtag.length === 1 && currentHashtag[0] === '#') {
+    //     hashtagField.setCustomValidity('хеш-тег не может состоять только из одной решётки');
+    //     hashtagField.classList.add('text__hashtags--invalid');
+    //     return false;
+    //   } else if (currentHashtag.length > MAX_HASHTAG_LENGTH) {
+    //     hashtagField.setCustomValidity('максимальная длина одного хэш-тега 20 символов, включая решётку');
+    //     hashtagField.classList.add('text__hashtags--invalid');
+    //     return false;
+    //   } else if (currentHashtag.indexOf('#', 1) > 0) {
+    //     hashtagField.setCustomValidity('хэш-теги должны быть разделены пробелами');
+    //     hashtagField.classList.add('text__hashtags--invalid');
+    //     return false;
+    //   }
+    // }
+
+    if (hashtagArray.some(function (currentHashtag) {
+      return currentHashtag[0] !== '#';
+    })) {
+      hashtagField.setCustomValidity('хэш-тег должен начинаться с символа #');
+      hashtagField.classList.add('text__hashtags--invalid');
+      return false;
+    } else if (hashtagArray.some(function (currentHashtag) {
+      return currentHashtag.length === 1 && currentHashtag[0] === '#';
+    })) {
+      hashtagField.setCustomValidity('хеш-тег не может состоять только из одной решётки');
+      hashtagField.classList.add('text__hashtags--invalid');
+      return false;
+    } else if (hashtagArray.some(function (currentHashtag) {
+      return currentHashtag.length > MAX_HASHTAG_LENGTH;
+    })) {
+      hashtagField.setCustomValidity('максимальная длина одного хэш-тега 20 символов, включая решётку');
+      hashtagField.classList.add('text__hashtags--invalid');
+      return false;
+    } else if (hashtagArray.some(function (currentHashtag) {
+      return currentHashtag.indexOf('#', 1) > 0;
+    })) {
+      hashtagField.setCustomValidity('хэш-теги должны быть разделены пробелами');
+      hashtagField.classList.add('text__hashtags--invalid');
+      return false;
     }
+
     hashtagField.setCustomValidity('');
     hashtagField.classList.remove('text__hashtags--invalid');
     return true;
@@ -92,5 +123,6 @@
 
   hashtagField.addEventListener('change', function () {
     validateHashtagField();
+    console.log(validateHashtagField());
   });
 })();
