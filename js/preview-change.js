@@ -120,7 +120,7 @@
 
   document.addEventListener('keydown', onPopupEscPress);
 
-  window.previewPicture = document.querySelector('.img-upload__preview img');
+  var previewPicture = document.querySelector('.img-upload__preview img');
   var effectsList = document.querySelector('.effects__list');
 
   effectsList.addEventListener('click', function (evt) {
