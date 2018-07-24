@@ -123,6 +123,5 @@
 
   hashtagField.addEventListener('change', function () {
     validateHashtagField();
-    console.log(validateHashtagField());
   });
 })();
