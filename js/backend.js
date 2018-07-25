@@ -7,7 +7,7 @@
     SUCCESS_CODE: 200,
     BAD_REQUEST_CODE: 400,
     NOT_FOUND_CODE: 404
-  }
+  };
 
   var typesRequest = {
     load: 'load',
@@ -27,7 +27,7 @@
               onLoad();
             } else if (type === typesRequest.load) {
               onLoad(xhr.response);
-            }            
+            }
             break;
           case HTTPStatuse.BAD_REQUEST_CODE:
             error = 'Неверный запрос';
@@ -52,7 +52,6 @@
       });
 
       xhr.timeout = 10000;
-      
       if (type === typesRequest.load) {
         xhr.open('GET', URL_DOWNLOAD);
         xhr.send();
