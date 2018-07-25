@@ -85,12 +85,12 @@
   var previewPicture = document.querySelector('.img-upload__preview img');
 
   uploadForm.addEventListener('submit', function (evt) {
-    window.backend.upload(new FormData(uploadForm), function () {
+    window.backend.request(function () {
       uploadOverlay.classList.add('hidden');
       previewPicture.className = '';
       previewPicture.style.filter = 'none';
       uploadForm.reset();
-    }, onError);
+    }, onError, 'upload', new FormData(uploadForm));
     evt.preventDefault();
   });
 
