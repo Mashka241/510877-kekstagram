@@ -167,7 +167,7 @@
     var effectValue = ((currentEffect.max - currentEffect.min) * effectDepth / ONE_HUNDRED_PERCENT) + currentEffect.min;
     previewPicture.style.filter = currentEffect.effect + '(' + effectValue + currentEffect.typeValue + ')';
     scaleLevel.style.width = effectDepth + '%';
-    scaleValueInput.value = effectDepth + '';
+    scaleValueInput.value = effectDepth;
     scaleValueInput.setAttribute('value', effectDepth + '');
   };
 
