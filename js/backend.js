@@ -1,85 +1,85 @@
 'use strict';
 (function () {
-  var URL = 'https://js.dump.academy/kekstagram/data';
+  var URL_DOWNLOAD = 'https://js.dump.academy/kekstagram/data';
+  var URL_UPLOAD = 'https://js.dump.academy/kekstagram';
+  var SUCCESS_CODE = 200;
+  var BAD_REQUEST_CODE = 400;
+  var NOT_FOUND_CODE = 404;
 
-  window.load = function (onLoad, onError) {
+  window.backend = {
+    load: function (onLoad, onError) {
+      var xhr = new XMLHttpRequest();
+      xhr.responseType = 'json';
 
-    var xhr = new XMLHttpRequest();
+      xhr.addEventListener('load', function () {
+        var error;
+        switch (xhr.status) {
+          case SUCCESS_CODE:
+            onLoad(xhr.response);
+            break;
+          case BAD_REQUEST_CODE:
+            error = 'Неверный запрос';
+            break;
+          case NOT_FOUND_CODE:
+            error = 'Ничего не найдено';
+            break;
+          default:
+            error = 'Cтатус ответа: : ' + xhr.status + ' ' + xhr.statusText;
+        }
+        if (error) {
+          onError(error);
+        }
+      });
 
-    xhr.responseType = 'json';
+      xhr.addEventListener('error', function () {
+        onError('Произошла ошибка соединения');
+      });
 
-    xhr.addEventListener('load', function () {
-      var error;
-      switch (xhr.status) {
-        case 200:
-          onLoad(xhr.response);
-          break;
-        case 400:
-          error = 'Неверный запрос';
-          break;
-        case 404:
-          error = 'Ничего не найдено';
-          break;
-        default:
-          error = 'Cтатус ответа: : ' + xhr.status + ' ' + xhr.statusText;
-      }
-      if (error) {
-        onError(error);
-      }
-    });
+      xhr.addEventListener('timeout', function () {
+        onError('Запрос не успел выполниться за ' + xhr.timeout + 'мс');
+      });
 
-    xhr.addEventListener('error', function () {
-      onError('Произошла ошибка соединения');
-    });
+      xhr.timeout = 10000;
 
-    xhr.addEventListener('timeout', function () {
-      onError('Запрос не успел выполниться за ' + xhr.timeout + 'мс');
-    });
+      xhr.open('GET', URL_DOWNLOAD);
+      xhr.send();
+    },
+    upload: function (data, onLoad, onError) {
+      var xhr = new XMLHttpRequest();
+      xhr.responseType = 'json';
 
-    xhr.timeout = 10000;
+      xhr.addEventListener('load', function () {
+        var error;
+        switch (xhr.status) {
+          case SUCCESS_CODE:
+            onLoad();
+            break;
+          case BAD_REQUEST_CODE:
+            error = 'Неверный запрос';
+            break;
+          case NOT_FOUND_CODE:
+            error = 'Ничего не найдено';
+            break;
+          default:
+            error = 'Cтатус ответа: : ' + xhr.status + ' ' + xhr.statusText;
+        }
+        if (error) {
+          onError(error);
+        }
+      });
 
-    xhr.open('GET', URL);
-    xhr.send();
-  };
-})();
+      xhr.addEventListener('error', function () {
+        onError('Произошла ошибка соединения');
+      });
 
-(function () {
-  var URL = 'https://js.dump.academy/kekstagram';
-  window.upload = function (data, onLoad, onError) {
-    var xhr = new XMLHttpRequest();
-    xhr.responseType = 'json';
+      xhr.addEventListener('timeout', function () {
+        onError('Запрос не успел выполниться за ' + xhr.timeout + 'мс');
+      });
 
-    xhr.addEventListener('load', function () {
-      var error;
-      switch (xhr.status) {
-        case 200:
-          onLoad();
-          break;
-        case 400:
-          error = 'Неверный запрос';
-          break;
-        case 404:
-          error = 'Ничего не найдено';
-          break;
-        default:
-          error = 'Cтатус ответа: : ' + xhr.status + ' ' + xhr.statusText;
-      }
-      if (error) {
-        onError(error);
-      }
-    });
+      xhr.timeout = 10000;
 
-    xhr.addEventListener('error', function () {
-      onError('Произошла ошибка соединения');
-    });
-
-    xhr.addEventListener('timeout', function () {
-      onError('Запрос не успел выполниться за ' + xhr.timeout + 'мс');
-    });
-
-    xhr.timeout = 10000;
-
-    xhr.open('POST', URL);
-    xhr.send(data);
+      xhr.open('POST', URL_UPLOAD);
+      xhr.send(data);
+    }
   };
 })();

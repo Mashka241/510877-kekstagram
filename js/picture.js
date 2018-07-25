@@ -55,9 +55,10 @@
     });
 
     var fragment = document.createDocumentFragment();
-    for (var i = 0; i < photoArr.length; i++) {
-      fragment.appendChild(renderPhoto(photoArr[i]));
-    }
+
+    photoArr.forEach(function (photo) {
+      fragment.appendChild(renderPhoto(photo));
+    });
     picturesList.appendChild(fragment);
   };
 
@@ -77,7 +78,7 @@
     loadError.classList.remove('hidden');
   };
 
-  window.load(onLoad, onError);
+  window.backend.load(onLoad, onError);
 
   var filtersList = document.querySelector('.img-filters');
   var filtersForm = document.querySelector('.img-filters__form');
