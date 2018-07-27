@@ -21,11 +21,7 @@
   };
 
   var isDouble = function (array) {
-    if (array.some(isElementDouble)) {
-      return true;
-    } else {
-      return false;
-    }
+    return (array.some(isElementDouble));
   };
 
   var validateHashtagField = function () {
